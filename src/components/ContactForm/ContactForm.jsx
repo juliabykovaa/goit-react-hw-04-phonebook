@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import { Form, Label, Input, Button } from './ContactForm.styled';
 import PropTypes from 'prop-types';
 
@@ -31,8 +31,8 @@ function ContactForm({ contacts, onSubmit }) {
       alert('This contact is already in your contact book');
     } else {
       onSubmit({ name, number });
-      reset();
     }
+    reset();
   };
 
   return (
@@ -74,6 +74,7 @@ ContactForm.propTypes = {
       number: PropTypes.string,
     })
   ),
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

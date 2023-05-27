@@ -6,19 +6,16 @@ import { nanoid } from 'nanoid';
 import { Container, Header } from './App.styled';
 
 function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const storedContacts = localStorage.getItem('phone');
+    return storedContacts ? JSON.parse(storedContacts) : [];
+  });
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    const savedContact = JSON.parse(localStorage.getItem('phone'));
-    if (savedContact) {
-      setContacts(savedContact);
-    }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('phone', JSON.stringify(contacts));
-  }, [contacts]);
+useEffect(() => {
+  localStorage.setItem('phone', JSON.stringify(contacts));
+}, [contacts]);
 
   const deleteContact = contactId => {
     setContacts(prevContacts =>
@@ -35,7 +32,7 @@ function App() {
         name,
         number,
       };
-      setContacts(prevContacts => [contactToAdd, ...prevContacts]);
+      setContacts(prevContacts => [...prevContacts, contactToAdd]);
     }
   };
 
